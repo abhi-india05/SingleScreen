@@ -13,8 +13,13 @@ const userSchema=new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    bookings;{
+        type:mongoose.Schema.Types.ObjectId,
+                        ref:"Show",
+                        required:true
     }
 });
 
-const User=new mongoose.model('user',userSchema);
+const User=new mongoose.Model('user',userSchema);
 module.exports=User;

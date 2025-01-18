@@ -6,10 +6,7 @@ const movieSchema=new mongoose.Schema({
                 ref:"Theatre",
                 required:true
     },
-    date:{
-        type:Date,
-        required:true
-    },
+   
     movie_name:{
         type:String,
         required:true

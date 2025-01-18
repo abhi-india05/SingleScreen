@@ -44,11 +44,11 @@ else res.status(200).send({
 });
 
 
-router.post('/owner/:name/addtheatre', async (req, res) => {
+router.post('/owner/:owner_id/addtheatre', async (req, res) => {
     try {
         
-        const { name } = req.params;
-        const owner = await Owner.findOne({ owner_name: name });
+        const { owner_id } = req.params;
+        const owner = await Owner.findById(owner_id);
 
         if (!owner) {
             return res.status(404).json({ message: 'Owner not found' });
@@ -91,34 +91,87 @@ router.post('/owner/:name/addtheatre', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
-app.post('/owner/:name/:theatre/addmovie',async(req,res)=>{
-    let name=req.params.name;
-    let th=req.params.theatre;
-    let getOwnerName=await Owner.find({owner_name:name});// this is not needed
-    let getTheatre=await Theatre.find({theatre_name:th});
+
+app.post('/owner/:owner_id/:theatre_id/addmovie',async(req,res)=>{
+    try{
+    let o_id=req.params.owner_id;
+    let th_id=req.params.theatre_id;
+  //  let getOwnerName=await Owner.findById(o_id);//this is not needed
+    let getTheatre=await Theatre.findById(th_id);
     let {movie_name,director,date,distributor,price,stars}=req.body;
     let newMovie=new Movie({theatre:getTheatre,date,movie_name,director,distributor,price,stars});
     await newMovie.save();
-    res.status(200).json({
+    return res.status(200).json({
         status:"success",
         message:`${newMovie.movie_name} added successfully`
     });
+}
+catch(error){
+    console.log(error);
+}
 });
-app.post('/user/:user/:theatre/:movie',);
 
-app.get('/user/:user/profile',async(req,res)=>{
-    let user=await User.findOne({name:req.params.user});
+
+
+app.get('user/:user_id/:show_id',async(req,res)=>{
+    try{
+    let u_id=req.params.user_id;
+    let s_id=req.params.show_id;
+    
+        let user=await User.findById(u_id);
+        if(!user) return res.status(404).json({
+            status:"fail",
+            message:"user not found"
+        });
+    
+       
+
+        let show=await Show.findById(s_id);
+        if(!show) return res.status(404).json({
+            status:"fail",
+            message:"show not found"
+        });
+
+        return res.status(200).json({user,show});
+    }
+    catch(error){
+        console.log('error occured');
+        return res.status(500).json({
+            status:"error",
+            message:"internal server error"
+        });
+    }});
+
+
+app.post('/user/:userid/:showid',async(req,res)=>{
+    try{
+        let{userid,showid}=req.params;
+        
+    }
+});
+
+app.get('/user/:user_id/profile',async(req,res)=>{
+    try{
+    let {user_id}=req.params;
+    let user=await User.findById(user_id);
     if(!user){
-        res.status(404).send({
+        return res.status(404).send({
             status:"fail",
             message:"not found"
         });
     }
-    else res.status(200).send({
+    return  res.status(200).send({
         status:"success",
         message:"user found",
         data:{user}
     });
+}catch(error){
+    console.error(error);
+    return res.json(500).json({
+        status:"fail",
+        message:"server error"
+    })
+}
     
 });
 

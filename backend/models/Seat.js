@@ -9,6 +9,10 @@ const seatSchema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
+    seat_show:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Show"
+    },
     booked_user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
