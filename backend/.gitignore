@@ -1,0 +1,95 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+lerna-debug.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local # For any specific environment .env files
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm/
+
+# Optional ESLint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Compiled TypeScript files
+# If you're compiling TypeScript to JavaScript in a 'dist' or 'build' folder,
+# you should ignore the generated JavaScript files and source maps.
+# Only commit your TypeScript source files.
+dist/
+build/
+*.js.map
+*.d.ts.map
+*.tsbuildinfo # TypeScript build info file
+
+# Test coverage reports
+coverage/
+.nyc_output/ # for nyc test coverage
+*.lcov # lcov format for coverage reports
+
+# Editor directories and files
+.idea/ # JetBrains IDEs (WebStorm, IntelliJ IDEA, etc.)
+.vscode/ # VS Code (consider if you want to commit shared settings.json)
+*.iml # IntelliJ IDEA module file
+.DS_Store # macOS specific
+Thumbs.db # Windows specific
+
+# Dependency lock files (generally, you should commit these)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Configuration files that might contain sensitive data or local settings
+# Be cautious with these and only ignore if they are truly local/temporary
+# and not critical for project setup. Use .env for sensitive data instead.
+*.pem # Private keys
+*.key # Other key files
+*.cer # Certificate files
+*.crt # Certificate files
+*.pfx # PKCS#12 files
+
+# Temporary files
+*.tmp
+*.bak
+*~
+*.swp
+*.sublime-project
+*.sublime-workspace
+
+# GraphQL schema dump (if you're using GraphQL and dumping the schema)
+schema.graphql
+schema.json
+
+# If you use Docker (commonly with Node.js backends)
+.dockerignore
+docker-compose.override.yml # If you have local overrides
+.docker/ # Or any local docker-related files
+
+# Miscellaneous
+.DS_Store
+.prettierignore
+.prettierrc.js
