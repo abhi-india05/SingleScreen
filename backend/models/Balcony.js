@@ -1,15 +1,27 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
-const balconySchema=new mongoose.Schema({
-    balrow:{
-        type:Number,
-        required:true
+const balconySchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
     },
-    balcol:{
-        type:Number,
-        required:true
+    theatre: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Theatre",
+        required: true
+    },
+    row: {
+        type: Number,
+        required: true
+    },
+    col: {
+        type: Number,
+        required: true
+    },
+    priceMultiplier: {
+        type: Number,
+        default: 1.0
     }
-});
+}, { timestamps: true });
 
-const Balcony=new mongoose.model('balcony',balconySchema);
-module.exports=Balcony;
+module.exports = mongoose.model('Balcony', balconySchema);

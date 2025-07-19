@@ -1,21 +1,33 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
-
-const ownerSchema=new mongoose.Schema({
-    owner_name:{
-        type:String,
-        required:true
+const ownerSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true
     },
-    owner_email:{
-        type:String,
-        required:true
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true,
+        match: [/\S+@\S+\.\S+/, 'is invalid']
     },
+    password: {
+        type: String,
+        required: true,
+        minlength: 8
+    },
+    phone: {
+        type: String,
+        required: true,
+        match: [/^[0-9]{10}$/, 'is invalid']
+    },
+    theatres: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Theatre"
+    }]
+}, { timestamps: true });
 
-    owner_password:{
-        type:String,
-        required:true
-    }
-});
-
-const Owner=new mongoose.model('owner',ownerSchema);
-module.exports=Owner;
+module.exports = mongoose.model('Owner', ownerSchema);

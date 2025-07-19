@@ -1,34 +1,52 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
-const movieSchema=new mongoose.Schema({
-    theatre:{
-         type:mongoose.Schema.Types.ObjectId,
-                ref:"Theatre",
-                required:true
+const movieSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+        unique: true
     },
-   
-    movie_name:{
-        type:String,
-        required:true
+    description: {
+        type: String,
+        required: true
     },
-    director:{
-        type:String,
-        required:true
+    director: {
+        type: String,
+        required: true
     },
-    distributor:{
-        type:String
+    cast: [{
+        type: String,
+        required: true
+    }],
+    genre: [{
+        type: String,
+        enum: ['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi', 'Thriller', 'Romance', 'Animation']
+    }],
+    language: {
+        type: String,
+        required: true
     },
-    price:{
-        type:Number,
-        required:true
+    duration: {
+        type: Number, // in minutes
+        required: true
     },
-    stars:{
-        type:[String],
-        required:true
+    releaseDate: {
+        type: Date,
+        required: true
+    },
+    posterUrl: {
+        type: String,
+        required: true
+    },
+    trailerUrl: {
+        type: String
+    },
+    rating: {
+        type: Number,
+        min: 0,
+        max: 10,
+        default: 0
     }
+}, { timestamps: true });
 
-})
-
-
-const Movie=new mongoose.model('movie',movieSchema);
-module.exports=Movie;
+module.exports = mongoose.model('Movie', movieSchema);

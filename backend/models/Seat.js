@@ -1,38 +1,50 @@
 const mongoose = require('mongoose');
 
 const seatSchema = new mongoose.Schema({
-    seatno: {
+    seatNumber: {
         type: String,
         required: true
     },
-    isbooked: {
-        type: Boolean,
+    theatre: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Theatre",
         required: true
     },
-    seat_show:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Show"
-    },
-    booked_user: {
+    balcony: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        validate: {
-            validator: function (v) {
-                // Check if 'isbooked' is true, then 'booked_user' must be provided
-                if (this.isbooked && !v) {
-                    return false; // Invalid if 'isbooked' is true but 'booked_user' is missing
-                }
-                // If 'isbooked' is false, 'booked_user' must be null or undefined
-                if (!this.isbooked && v) {
-                    return false; // Invalid if 'isbooked' is false but 'booked_user' is provided
-                }
-                return true; // Otherwise, valid
-            },
-            message: "Invalid user assignment based on booking status!"
-        }
+        ref: "Balcony"
+    },
+    row: {
+        type: Number,
+        required: true
+    },
+    col: {
+        type: Number,
+        required: true
+    },
+    seatType: {
+        type: String,
+        enum: ['normal', 'premium', 'VIP'],
+        default: 'normal'
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    isBooked: {
+        type: Boolean,
+        default: false
+    },
+    show: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Show"
+    },
+    bookedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     }
-});
+}, { timestamps: true });
 
-const Seat = mongoose.model('Seat', seatSchema);
+seatSchema.index({ theatre: 1, show: 1, seatNumber: 1 }, { unique: true });
 
-module.exports = Seat;
+module.exports = mongoose.model('Seat', seatSchema);
