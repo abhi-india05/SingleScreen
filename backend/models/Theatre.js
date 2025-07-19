@@ -1,42 +1,44 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
-
-const theatreSchema=new mongoose.Schema({
-    theatre_name:{
-        type:String,
-        required:true
+const theatreSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true
     },
-    address:{
-        type:String,
-        required:true
+    address: {
+        type: String,
+        required: true
     },
-    city:{
-        type:String,
-        required:true
+    city: {
+        type: String,
+        required: true
     },
-    state:{
-        type:String,
-        required:true
+    state: {
+        type: String,
+        required: true
     },
-    owner:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required:true
+    pincode: {
+        type: String,
+        required: true
     },
-    
-    dim_row:{
-        type:Number,
-        required:true
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Owner",
+        required: true
     },
-    dim_col:{
-        type:Number,
-        required:true
+    contactNumber: {
+        type: String,
+        required: true
     },
-    theatre_graphic:{
-        type:[[Seat]],
-        required:true
+    amenities: [{
+        type: String,
+        enum: ['parking', 'food_court', 'wheelchair', '3d', 'dolby']
+    }],
+    totalScreens: {
+        type: Number,
+        required: true
     }
-});
+}, { timestamps: true });
 
-const Theatre=new mongoose.model('theatre',theatreSchema);
-module.exports=Theatre;
+module.exports = mongoose.model('Theatre', theatreSchema);

@@ -1,32 +1,42 @@
-const mongoose=require('mongoose');
-const Movie=require('./Movie');
+const mongoose = require('mongoose');
 
-const showSchema=new mongoose.Schema({
-    show_movie:{ 
-      type:mongoose.Schema.Types.ObjectId,
-                    ref:"Movie",
-                    required:true
+const showSchema = new mongoose.Schema({
+    movie: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Movie",
+        required: true
     },
-    show_theatre:{
-      type:mongoose.Schema.Types.ObjectId,
-                    ref:"Theatre",
-                    required:true
-
+    theatre: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Theatre",
+        required: true
     },
     date: {
+        type: Date,
+        required: true
+    },
+    startTime: {
         type: String,
         required: true,
-        match: /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/
-      },
-      time: {
-        type: String, 
+        match: /^(0[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/
+    },
+    endTime: {
+        type: String,
         required: true,
-        match: /^(0[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/,
-      }
-    
+        match: /^(0[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/
+    },
+    totalSeats: {
+        type: Number,
+        required: true
+    },
+    availableSeats: {
+        type: Number,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    }
+}, { timestamps: true });
 
-
-});
-
-const Show=mongoose.Model('Show',showSchema);
-module.exports=Show;
+module.exports = mongoose.model('Show', showSchema);
